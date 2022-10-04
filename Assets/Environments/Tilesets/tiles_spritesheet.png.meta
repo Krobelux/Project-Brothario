@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -3677,21 +3677,16 @@ TextureImporter:
     nameFileIdTable:
       tiles_spritesheet_160: 1399616701
       tiles_spritesheet_154: 479097702
-      tiles_spritesheet_91: 1631513056
-      tiles_spritesheet_39: 1222447072
-      tiles_spritesheet_32: -1617624161
-      tiles_spritesheet_168: 1979764582
+      tiles_spritesheet_69: 877594281
       tiles_spritesheet_97: -1758716671
-      tiles_spritesheet_86: -1295059081
+      tiles_spritesheet_45: -479360193
       tiles_spritesheet_31: 170391886
-      tiles_spritesheet_116: -1694854176
-      tiles_spritesheet_57: 1174038281
+      tiles_spritesheet_128: -1468257965
       tiles_spritesheet_127: 1119006252
       tiles_spritesheet_117: 1828191187
       tiles_spritesheet_158: 125041470
       tiles_spritesheet_5: -6578760
       tiles_spritesheet_76: 640790472
-      tiles_spritesheet_128: -1468257965
       tiles_spritesheet_79: 876691052
       tiles_spritesheet_0: -299920758
       tiles_spritesheet_88: -1155436723
@@ -3702,24 +3697,18 @@ TextureImporter:
       tiles_spritesheet_6: 203133650
       tiles_spritesheet_60: 1090144066
       tiles_spritesheet_1: -1608953427
-      tiles_spritesheet_124: -750562679
+      tiles_spritesheet_159: -671386049
       tiles_spritesheet_93: -350988693
       tiles_spritesheet_66: 1191168795
       tiles_spritesheet_63: -1888847380
       tiles_spritesheet_92: 829973829
       tiles_spritesheet_4: -1645818548
-      tiles_spritesheet_159: -671386049
       tiles_spritesheet_89: -1338115625
       tiles_spritesheet_74: 1614496561
-      tiles_spritesheet_15: -1351090751
       tiles_spritesheet_140: -1972352786
+      tiles_spritesheet_15: -1351090751
       tiles_spritesheet_148: -1307907021
       tiles_spritesheet_16: -1556703844
-      tiles_spritesheet_121: 2069392346
-      tiles_spritesheet_18: -429297188
-      tiles_spritesheet_28: 969726304
-      tiles_spritesheet_105: 364463645
-      tiles_spritesheet_37: -228922122
       tiles_spritesheet_138: -1967046558
       tiles_spritesheet_157: -274751100
       tiles_spritesheet_161: -1479860682
@@ -3758,26 +3747,26 @@ TextureImporter:
       tiles_spritesheet_165: -418379025
       tiles_spritesheet_164: -845265110
       tiles_spritesheet_151: -1944493535
-      tiles_spritesheet_115: -2137289773
-      tiles_spritesheet_53: 1979680888
+      tiles_spritesheet_152: 286832787
       tiles_spritesheet_136: 1099872156
+      tiles_spritesheet_53: 1979680888
       tiles_spritesheet_38: 1476449757
       tiles_spritesheet_49: -1394308248
       tiles_spritesheet_133: 1413646724
-      tiles_spritesheet_153: -1953249353
       tiles_spritesheet_156: 1544506607
       tiles_spritesheet_13: 147492151
-      tiles_spritesheet_152: 286832787
+      tiles_spritesheet_115: -2137289773
       tiles_spritesheet_30: 1157565627
       tiles_spritesheet_26: -616346497
       tiles_spritesheet_27: 1492258980
       tiles_spritesheet_58: 983449395
       tiles_spritesheet_77: -762525615
+      tiles_spritesheet_153: -1953249353
       tiles_spritesheet_64: 390213128
-      tiles_spritesheet_80: 630164125
       tiles_spritesheet_145: -593634246
       tiles_spritesheet_55: -1938310563
       tiles_spritesheet_84: -1252142024
+      tiles_spritesheet_80: 630164125
       tiles_spritesheet_78: 872630956
       tiles_spritesheet_59: -1693389318
       tiles_spritesheet_41: -363967925
@@ -3831,14 +3820,13 @@ TextureImporter:
       tiles_spritesheet_70: 1004319715
       tiles_spritesheet_112: 1997020828
       tiles_spritesheet_73: -2025284182
-      tiles_spritesheet_126: 1408425326
       tiles_spritesheet_40: 1493129398
-      tiles_spritesheet_45: -479360193
-      tiles_spritesheet_69: 877594281
       tiles_spritesheet_98: 783827229
-      tiles_spritesheet_51: 1664571032
-      tiles_spritesheet_54: 494577810
-      tiles_spritesheet_11: -1138808148
+      tiles_spritesheet_116: -1694854176
+      tiles_spritesheet_39: 1222447072
+      tiles_spritesheet_91: 1631513056
+      tiles_spritesheet_86: -1295059081
+      tiles_spritesheet_126: 1408425326
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1230,7 +1230,6 @@ TextureImporter:
       superbrothario_run5: 478697082
       brothario_jump: -2146348919
       luthario_idle: 2045291777
-      smol_luthario_run4: 587486067
       superbrothario_run1: -193203492
       brothario_run2: -587476442
       smol_luthario_run_skid: 772735896
@@ -1262,12 +1261,13 @@ TextureImporter:
       smol_brothario_run6: -1936891217
       brothario_midtransform: 1323160419
       luthario_run5: 1376927150
+      superbrothario_crouch: -2088763203
       luthario_run6: 1339267139
+      smol_luthario_run4: 587486067
+      brothario_run3: -203541859
       luthario_run2: 1385675755
       luthario_run4: 331865370
-      brothario_run3: -203541859
       brothario_run4: 115194296
-      superbrothario_crouch: -2088763203
       smol_brothario_idle: -1482417938
       smol_brothario_jump: 1528589842
   spritePackingTag: 
