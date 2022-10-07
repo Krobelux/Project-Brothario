@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -17,20 +18,40 @@ public class PlayerController : MonoBehaviour
     private bool isTouchingGround = false; //see if can work without initi
 
 
+
+
+    //Animation Variable
+    Animator anim;
+
+    //Flip Method Variable
+    bool isFacingRight;
+
     private void Start(){
 
         //Player's rigidbody
+
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
 
+        //Assigning Animatior value to anim variable
+        anim = GetComponent<Animator>();
+
+        isFacingRight = true;
+
+    }
+
+    void Update() 
+    {
+        Animation();
+        Flip();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
         //2D Platformer so only need to get the Horizontal Input
-        float horiz = Input.GetAxis("Horizontal");
+        
         isTouchingGround = TouchingGround();
-
+        float horiz = Input.GetAxis("Horizontal");
         rigidbody2d.velocity = new Vector2(horiz * speed, rigidbody2d.velocity.y);
 
         //Jump (Bool is faster to compute, so compare a bool arg first before comparison)
@@ -50,6 +71,24 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    void Animation()
+    {
+        //Set the animSpeed variable
+        float horiz = Input.GetAxis("Horizontal");
+        anim.SetFloat("animSpeed", Math.Abs(horiz));
+    }
+
+    void Flip()
+    {
+        float horiz = Input.GetAxis("Horizontal");
+
+        //If player is starting to move left but is facing right |or| if player is starting to move right but is facing left
+        if (horiz < 0 && isFacingRight == true || horiz > 0 && isFacingRight == false)  
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            isFacingRight = !isFacingRight;
+        }
+    }
 
 }
 
