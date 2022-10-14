@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     private void Start(){
 
         //Player's rigidbody
-
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
 
         //Assigning Animatior value to anim variable
@@ -76,6 +75,10 @@ public class PlayerController : MonoBehaviour
         //Set the animSpeed variable
         float horiz = Input.GetAxis("Horizontal");
         anim.SetFloat("animSpeed", Math.Abs(horiz));
+
+        //Set the animSpeed variable
+        float vert = Input.GetAxis("Vertical");
+        anim.SetFloat("vertAnimSpeed", Math.Abs(vert));
     }
 
     void Flip()
@@ -87,10 +90,14 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             isFacingRight = !isFacingRight;
+            
         }
     }
 
 }
+
+
+
 
 
         //OLD CODE
