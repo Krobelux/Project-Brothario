@@ -1,0 +1,5 @@
+ public Transform player;
+ void Update () 
+ {
+     transform.position = new Vector3 (player.position.x + 6, 0, -10); // Camera should be able to follow the player
+ }
