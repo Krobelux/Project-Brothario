@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -13,12 +14,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float grndCheckRadius = 0.24f;
     [SerializeField] private Transform grndCheckPos;
     [SerializeField] private LayerMask whatIsGrnd;
+    [SerializeField] private LayerMask whatIsHzrd;
 
     private Rigidbody2D rigidbody2d;
-    private bool isTouchingGround = false; //see if can work without initi
+    private Collider2D collider2d;
+    private bool isTouchingGround = false;
+    private bool isTouchingHazard = false;
 
-
-
+    [SerializeField] private float deathDelay = 3.0f;
 
     //Animation Variable
     Animator anim;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
         //Player's rigidbody
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
+        collider2d = transform.GetComponent<Collider2D>();
 
         //Assigning Animatior value to anim variable
         anim = GetComponent<Animator>();
@@ -42,6 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         Animation();
         Flip();
+        
     }
 
     // Update is called once per frame
@@ -50,6 +55,7 @@ public class PlayerController : MonoBehaviour
         //2D Platformer so only need to get the Horizontal Input
         
         isTouchingGround = TouchingGround();
+        isTouchingHazard = TouchingHazard();
         float horiz = Input.GetAxis("Horizontal");
         rigidbody2d.velocity = new Vector2(horiz * speed, rigidbody2d.velocity.y);
 
@@ -60,15 +66,34 @@ public class PlayerController : MonoBehaviour
             isTouchingGround = false;
         }
 
-    }
+        if (TouchingHazard() == true){
+            Debug.Log("Death occurs.");
+            StartCoroutine(WaitForAnim());
+            rigidbody2d.velocity = new Vector2(0, 0);
 
-
-        private bool TouchingGround(){
-            return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsGrnd);
-            
+            Debug.Log("Collider.enabled = " + collider2d.enabled);
+            collider2d.enabled = false;
 
         }
 
+    }
+
+
+    private bool TouchingGround(){
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsGrnd);
+            
+    }
+
+    private bool TouchingHazard(){
+        //Debug.Log("is touching hazard");
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);
+            
+    }
+
+    private IEnumerator WaitForAnim(){
+        yield return new WaitForSeconds(deathDelay);
+        SceneManager.LoadScene("TestLevel");  //Make sure level name is consistent with Scene level names
+    }
 
     void Animation()
     {
@@ -79,6 +104,10 @@ public class PlayerController : MonoBehaviour
         //Set the animSpeed variable
         float vert = Input.GetAxis("Vertical");
         anim.SetFloat("vertAnimSpeed", Math.Abs(vert));
+
+        anim.SetBool("isTouchingGround", isTouchingGround);
+        anim.SetBool("isTouchingHazard", isTouchingHazard);
+
     }
 
     void Flip()
