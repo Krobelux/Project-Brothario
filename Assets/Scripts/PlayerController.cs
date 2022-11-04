@@ -15,11 +15,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform grndCheckPos;
     [SerializeField] private LayerMask whatIsGrnd;
     [SerializeField] private LayerMask whatIsHzrd;
+    [SerializeField] private Transform blockCheckPos;
+    [SerializeField] private LayerMask whatIsBlock;
+    
 
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
+    private bool isPunchingBlock = false;
 
     [SerializeField] private float deathDelay = 3.0f;
 
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
         
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
+        isPunchingBlock = TouchingBlock();
         float horiz = Input.GetAxis("Horizontal");
         rigidbody2d.velocity = new Vector2(horiz * speed, rigidbody2d.velocity.y);
 
@@ -64,6 +69,8 @@ public class PlayerController : MonoBehaviour
         {
             rigidbody2d.AddForce(new Vector2(0.0f, jumpForce));
             isTouchingGround = false;
+
+
         }
 
         if (TouchingHazard() == true){
@@ -84,9 +91,17 @@ public class PlayerController : MonoBehaviour
             
     }
 
+    //Overlap Component to check if Player overlaps with hazard
     private bool TouchingHazard(){
         //Debug.Log("is touching hazard");
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);
+            
+    }
+
+    //Overlap Component to check if Player overlaps block from underneath
+    private bool TouchingBlock(){
+        Debug.Log("is touching block");
+        return Physics2D.OverlapCircle(blockCheckPos.position, grndCheckRadius, whatIsBlock);
             
     }
 
@@ -107,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isTouchingGround", isTouchingGround);
         anim.SetBool("isTouchingHazard", isTouchingHazard);
+        anim.SetBool("isTouchingBlock", isPunchingBlock);
 
     }
 
