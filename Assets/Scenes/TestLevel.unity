@@ -560,6 +560,7 @@ GameObject:
   - component: {fileID: 515061896}
   - component: {fileID: 515061897}
   - component: {fileID: 515061898}
+  - component: {fileID: 515061899}
   m_Layer: 12
   m_Name: ItemBlock
   m_TagString: Untagged
@@ -575,12 +576,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515061894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5, y: 5.48, z: 0}
+  m_LocalPosition: {x: -6.53, y: 5.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1434298257}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &515061896
 SpriteRenderer:
@@ -642,19 +643,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515061894}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &515061898
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -681,6 +682,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &515061899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515061894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0aa5e6a556ec2041aaf015f893edd2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  block: {fileID: 515061894}
+  item: {fileID: 3990936297591755001, guid: 4f25782e5e64c544b81bd402d02dcb48, type: 3}
+  spriteRenderer: {fileID: 0}
+  newSprite: {fileID: 147492151, guid: 5f93459344d8b6c4da2be377cbe9cd99, type: 3}
+  blockHits: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,7 +3456,6 @@ GameObject:
   - component: {fileID: 1434298260}
   - component: {fileID: 1434298259}
   - component: {fileID: 1434298258}
-  - component: {fileID: 1434298261}
   m_Layer: 12
   m_Name: Blocks
   m_TagString: Blocks
@@ -3457,8 +3474,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 515061895}
+  m_Children: []
   m_Father: {fileID: 466883563}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3599,26 +3615,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!95 &1434298261
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434298256}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9bda754fe9253f84d9466ce0ccc36767, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1476385687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3863,7 +3859,7 @@ GameObject:
   - component: {fileID: 1969275732}
   m_Layer: 10
   m_Name: punchCheck
-  m_TagString: Untagged
+  m_TagString: PlayerHead
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3876,8 +3872,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969275730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.004, y: 0.608, z: 0}
-  m_LocalScale: {x: 3.0751874, y: 2.660446, z: 2.5220683}
+  m_LocalPosition: {x: 0, y: 0.55261, z: 0}
+  m_LocalScale: {x: 3.2178786, y: 2.7838926, z: 2.6390939}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2076252656549712074}
@@ -3925,7 +3921,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.4438857, g: 0.5377358, b: 0.52169657, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4002,6 +3998,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2973449766361287550, guid: 0060d236e485dfd40b94ccb06387606a, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0060d236e485dfd40b94ccb06387606a, type: 3}
 --- !u!1 &2076252656549712070 stripped
@@ -4027,11 +4027,11 @@ MonoBehaviour:
   grndCheckPos: {fileID: 175076846}
   whatIsGrnd:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 4864
   whatIsHzrd:
     serializedVersion: 2
     m_Bits: 16384
-  blockCheckPos: {fileID: 1969275731}
+  blockCheckPos: {fileID: 0}
   whatIsBlock:
     serializedVersion: 2
     m_Bits: 4096

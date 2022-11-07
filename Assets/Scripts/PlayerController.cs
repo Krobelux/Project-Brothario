@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private Collider2D collider2d;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
-    private bool isPunchingBlock = false;
 
     [SerializeField] private float deathDelay = 3.0f;
 
@@ -60,7 +59,6 @@ public class PlayerController : MonoBehaviour
         
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
-        isPunchingBlock = TouchingBlock();
         float horiz = Input.GetAxis("Horizontal");
         rigidbody2d.velocity = new Vector2(horiz * speed, rigidbody2d.velocity.y);
 
@@ -98,12 +96,6 @@ public class PlayerController : MonoBehaviour
             
     }
 
-    //Overlap Component to check if Player overlaps block from underneath
-    private bool TouchingBlock(){
-        Debug.Log("is touching block");
-        return Physics2D.OverlapCircle(blockCheckPos.position, grndCheckRadius, whatIsBlock);
-            
-    }
 
     private IEnumerator WaitForAnim(){
         yield return new WaitForSeconds(deathDelay);
@@ -122,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isTouchingGround", isTouchingGround);
         anim.SetBool("isTouchingHazard", isTouchingHazard);
-        anim.SetBool("isTouchingBlock", isPunchingBlock);
 
     }
 
