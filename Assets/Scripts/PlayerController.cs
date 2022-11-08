@@ -7,31 +7,39 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] private float speed = 10.4f;
-    [SerializeField] private float jumpForce = 10f;
+    //========================= Player properties ============================
+    [SerializeField] private float walkSpeed = 6f;       //The default speed if you just move the character
+    [SerializeField] private float jumpForce = 16f;
+    [SerializeField] private float runSpeed = 6f;      // Update the IsRunning runSpeed reset argument to match this
+    private float maxRunSpeed = 10.0f;
+    
+    private int plyrHealth = 1;     //The amount of hits a player can take before dying
+    [SerializeField] int plyrLives = 3;     //Amount of player lives before game over
+    [SerializeField] int plyrCoins = 0;     //Amount of coins the player has
 
-    //isTouchingGround components
+
+    //========================= Layer/GroundCheck properties ============================
     [SerializeField] private float grndCheckRadius = 0.24f;
     [SerializeField] private Transform grndCheckPos;
     [SerializeField] private LayerMask whatIsGrnd;
     [SerializeField] private LayerMask whatIsHzrd;
     [SerializeField] private Transform blockCheckPos;
     [SerializeField] private LayerMask whatIsBlock;
-    
-
-    private Rigidbody2D rigidbody2d;
-    private Collider2D collider2d;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
+    private Rigidbody2D rigidbody2d;
+    private Collider2D collider2d;
+    
 
     [SerializeField] private float deathDelay = 3.0f;
 
-    //Animation Variable
-    Animator anim;
+    Animator anim;      //Animation Variable
+    bool isFacingRight;     //Flip Method Variable
 
-    //Flip Method Variable
-    bool isFacingRight;
 
+
+
+    //========================= Methods ============================
     private void Start(){
 
         //Player's rigidbody
@@ -40,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
         //Assigning Animatior value to anim variable
         anim = GetComponent<Animator>();
-
+        
         isFacingRight = true;
 
     }
@@ -49,29 +57,28 @@ public class PlayerController : MonoBehaviour
     {
         Animation();
         Flip();
+        IsRunning();
         
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        //2D Platformer so only need to get the Horizontal Input
-        
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
-        float horiz = Input.GetAxis("Horizontal");
-        rigidbody2d.velocity = new Vector2(horiz * speed, rigidbody2d.velocity.y);
+        // float horiz = Input.GetAxis("Horizontal");
+        // rigidbody2d.velocity = new Vector2(horiz * walkSpeed, rigidbody2d.velocity.y);
 
         //Jump (Bool is faster to compute, so compare a bool arg first before comparison)
-        if (TouchingGround() && Input.GetAxis("Jump") > 0)
+        // if (TouchingGround() && Input.GetAxis("Jump") > 0)      //Player will jump if they are both touching the ground and pressing the Jump button
+        // {
+        //     rigidbody2d.AddForce(new Vector2(0.0f, jumpForce));
+        //     isTouchingGround = false;
+
+        // }
+
+        if (TouchingHazard() == true)       //rework this to take damage and then when damage is 0 call death
         {
-            rigidbody2d.AddForce(new Vector2(0.0f, jumpForce));
-            isTouchingGround = false;
-
-
-        }
-
-        if (TouchingHazard() == true){
             Debug.Log("Death occurs.");
             StartCoroutine(WaitForAnim());
             rigidbody2d.velocity = new Vector2(0, 0);
@@ -81,6 +88,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        
     }
 
 
@@ -89,13 +97,53 @@ public class PlayerController : MonoBehaviour
             
     }
 
-    //Overlap Component to check if Player overlaps with hazard
-    private bool TouchingHazard(){
+    
+    private bool TouchingHazard(){      //Overlap Component to check if Player overlaps with hazard
         //Debug.Log("is touching hazard");
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);
             
     }
 
+    private void IsRunning(){
+        float horiz = Input.GetAxis("Horizontal");
+
+        //Player run code block
+        if (TouchingGround() && Input.GetKey(KeyCode.LeftShift))        //Player will increase speed based on
+        {
+            if (runSpeed < maxRunSpeed)
+            {
+                runSpeed += Time.deltaTime * 12;
+            }
+            rigidbody2d.velocity = new Vector2(horiz * runSpeed, rigidbody2d.velocity.y);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))     
+        {
+            runSpeed = 6.0f;       //resets the run speed back to basic value | Update this to match the runspeed property at the top
+        }
+        else
+        {
+            rigidbody2d.velocity = new Vector2(horiz * walkSpeed, rigidbody2d.velocity.y);
+        }
+
+
+
+        //Player jump code block
+        if (TouchingGround() && Input.GetKey(KeyCode.Space))      //Player will jump if they are both touching the ground and pressing the Jump button
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0)        //Check if player is holding LShift and pressing either A or D
+            {
+                rigidbody2d.AddForce(new Vector2(horiz * runSpeed, jumpForce + (runSpeed / 2)));
+                isTouchingGround = false;
+            }
+            else
+            {
+                rigidbody2d.AddForce(new Vector2(horiz, jumpForce));
+                isTouchingGround = false;
+            }
+            
+
+        }
+    }
 
     private IEnumerator WaitForAnim(){
         yield return new WaitForSeconds(deathDelay);
