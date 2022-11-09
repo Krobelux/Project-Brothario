@@ -8,6 +8,8 @@ TagManager:
   - Blocks
   - PlayerHead
   - Item
+  - staticCoin
+  - bounceCoin
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Background Objects
-  - 
+  - Coin
   - Ground
   - Obstacles
   - Player

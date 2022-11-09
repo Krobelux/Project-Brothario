@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     
     private int plyrHealth = 1;     //The amount of hits a player can take before dying
     [SerializeField] int plyrLives = 3;     //Amount of player lives before game over
-    [SerializeField] int plyrCoins = 0;     //Amount of coins the player has
+
 
 
     //========================= Layer/GroundCheck properties ============================
@@ -66,19 +66,11 @@ public class PlayerController : MonoBehaviour
     {
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
-        // float horiz = Input.GetAxis("Horizontal");
-        // rigidbody2d.velocity = new Vector2(horiz * walkSpeed, rigidbody2d.velocity.y);
-
-        //Jump (Bool is faster to compute, so compare a bool arg first before comparison)
-        // if (TouchingGround() && Input.GetAxis("Jump") > 0)      //Player will jump if they are both touching the ground and pressing the Jump button
-        // {
-        //     rigidbody2d.AddForce(new Vector2(0.0f, jumpForce));
-        //     isTouchingGround = false;
-
-        // }
 
         if (TouchingHazard() == true)       //rework this to take damage and then when damage is 0 call death
-        {
+        {   
+            //-1 health per hazard touched.
+            //If plyr health <= 0, add death
             Debug.Log("Death occurs.");
             StartCoroutine(WaitForAnim());
             rigidbody2d.velocity = new Vector2(0, 0);
@@ -97,7 +89,6 @@ public class PlayerController : MonoBehaviour
             
     }
 
-    
     private bool TouchingHazard(){      //Overlap Component to check if Player overlaps with hazard
         //Debug.Log("is touching hazard");
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);
@@ -107,41 +98,42 @@ public class PlayerController : MonoBehaviour
     private void IsRunning(){
         float horiz = Input.GetAxis("Horizontal");
 
-        //Player run code block
-        if (TouchingGround() && Input.GetKey(KeyCode.LeftShift))        //Player will increase speed based on
-        {
-            if (runSpeed < maxRunSpeed)
+        if (TouchingGround() == true){
+            //Player run code block
+            if (Input.GetAxis("Horizontal") != 0 && Input.GetKey(KeyCode.LeftShift))        //Player will increase speed based on
             {
-                runSpeed += Time.deltaTime * 12;
+                if (runSpeed < maxRunSpeed)
+                {
+                    runSpeed += Time.deltaTime * 12;
+                }
+                rigidbody2d.velocity = new Vector2(horiz * runSpeed, rigidbody2d.velocity.y);
             }
-            rigidbody2d.velocity = new Vector2(horiz * runSpeed, rigidbody2d.velocity.y);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))     
-        {
-            runSpeed = 6.0f;       //resets the run speed back to basic value | Update this to match the runspeed property at the top
-        }
-        else
-        {
-            rigidbody2d.velocity = new Vector2(horiz * walkSpeed, rigidbody2d.velocity.y);
-        }
-
-
-
-        //Player jump code block
-        if (TouchingGround() && Input.GetKey(KeyCode.Space))      //Player will jump if they are both touching the ground and pressing the Jump button
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0)        //Check if player is holding LShift and pressing either A or D
+            else if (Input.GetKeyUp(KeyCode.LeftShift))     
             {
-                rigidbody2d.AddForce(new Vector2(horiz * runSpeed, jumpForce + (runSpeed / 2)));
-                isTouchingGround = false;
+                runSpeed = 6.0f;       //resets the run speed back to basic value | Update this to match the runspeed property at the top
             }
             else
             {
+                rigidbody2d.velocity = new Vector2(horiz * walkSpeed, rigidbody2d.velocity.y);
+            }
+
+
+            //Player jump code block
+            if (Input.GetKey(KeyCode.Space))      //Player will jump if they are both touching the ground and pressing the Jump button
+            {
                 rigidbody2d.AddForce(new Vector2(horiz, jumpForce));
                 isTouchingGround = false;
-            }
-            
 
+                if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0)        //Check if player is holding LShift and pressing either A or D
+                {
+                    rigidbody2d.AddForce(new Vector2(horiz * (runSpeed * 1.4f), jumpForce * 1.1f));
+                    //rigidbody2d.AddRelativeForce(new Vector2(horiz + (runSpeed / 2 * horiz), jumpForce + (runSpeed / 2)));
+                }
+                else if (Input.GetKeyUp(KeyCode.LeftShift))     
+                {
+                    runSpeed = 6.0f;       //resets the run speed back to basic value | Update this to match the runspeed property at the top
+                }
+            }
         }
     }
 
@@ -149,6 +141,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(deathDelay);
         SceneManager.LoadScene("TestLevel");  //Make sure level name is consistent with Scene level names
     }
+
+
 
     void Animation()
     {

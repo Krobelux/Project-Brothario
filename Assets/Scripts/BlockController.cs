@@ -10,7 +10,7 @@ public class BlockController : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     [SerializeField] private GameObject block;  //This is to store the block object as a parent later on
     [SerializeField] private GameObject item;   //This is a game object that can spawn from this block
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite newSprite;  //This is the new sprite that this block will turn into after getting hit
     
     [SerializeField] private int blockHits = 1; //How many times the block can be hit before graying out
@@ -39,7 +39,6 @@ public class BlockController : MonoBehaviour
         if (collision.gameObject.tag == "Player" && playerHits < blockHits){
             Debug.Log("enter block");
             transform.position += new Vector3(0, 0.75f, 0);
-            //WaitForAnim();
             playerHits++;
             
         }
@@ -49,7 +48,6 @@ public class BlockController : MonoBehaviour
 
         if (collision.gameObject.tag == "Player" && grayOut == false){
             Debug.Log("exit block");
-            //WaitForAnim();  //Might be unnecessary
             transform.position -= new Vector3(0, 0.75f, 0);
             ChangeSprite();
         }
