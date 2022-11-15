@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform grndCheckPos;
     [SerializeField] private LayerMask whatIsGrnd;
     [SerializeField] private LayerMask whatIsHzrd;
+    [SerializeField] private LayerMask whatIsJumpableEnemy;
+    [SerializeField] private LayerMask whatIsDF;
     [SerializeField] private Transform blockCheckPos;
     [SerializeField] private LayerMask whatIsBlock;
     private bool isTouchingGround = false;
@@ -87,18 +89,17 @@ public class PlayerController : MonoBehaviour
             isTouchingGround = false;
         }
 
-        if (TouchingHazard() == true)       //rework this to take damage and then when damage is 0 call death
+        if (TouchingHazard() == true)       //Hazards are things like spike balls, spike walls, etc.
         {   
-            //-1 health per hazard touched.
-            //If plyr health <= 0, add death
-            Debug.Log("Death occurs.");
-            StartCoroutine(WaitForAnim());
-            rigidbody2d.velocity = new Vector2(0, 0);
+            Debug.Log("is touching Hazard");
+            Damage();
+        }
 
+        if (TouchingDeathField() == true)       //Death Field is the zone underneath the levels that immediately kill the player
+        {
+            Debug.Log("is touching Death Field");
             plyrLives -= 1;
-
-            Debug.Log("Collider.enabled = " + collider2d.enabled);
-            collider2d.enabled = false;
+            GameOver();
         }
 
         modifyPhysics();
@@ -107,13 +108,16 @@ public class PlayerController : MonoBehaviour
 
     private bool TouchingGround(){
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsGrnd);
-            
     }
-
     private bool TouchingHazard(){      //Overlap Component to check if Player overlaps with hazard
         //Debug.Log("is touching hazard");
-        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);
-            
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsHzrd);       
+    }
+    private bool JumpOnEnemy(){
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsJumpableEnemy);    //Set enemies who Brothario can jump off
+    }
+    private bool TouchingDeathField(){      //Overlap Component to check if Player overlaps with falling off map
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsDF);       
     }
 
     void Movement(float horiz){ 
@@ -191,15 +195,37 @@ public class PlayerController : MonoBehaviour
 
     void GameOver()
     {
+        StartCoroutine(WaitForAnim());
+        rigidbody2d.velocity = new Vector2(0, 0);
+        collider2d.enabled = false;
+        
+
         if (plyrLives <= 0)
         {
+            Debug.Log("GAME OVER.");
             SceneManager.LoadScene("GameOver");
         }
+        else {
+            Debug.Log("Death occurs. Restarting Level...");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  //Make sure level name is consistent with Scene level names
+        }
+    }
+
+    
+    void Damage(){      //Take Damage. Enemies deal 1 damage. Falling off map deals all damage. Brothario only has 2 health at most.
+        Debug.Log("Took damage");
+        plyrHealth -= 1;
+        if (plyrHealth >= 1){
+                GameOver();
+            }
+            else if (plyrHealth <= 0){
+                Debug.Log("Activated Game Over Method.");
+                GameOver();
+            }
     }
 
     private IEnumerator WaitForAnim(){
         yield return new WaitForSeconds(deathDelay);
-        SceneManager.LoadScene("Level 1");  //Make sure level name is consistent with Scene level names
     }
 
     void Animation()

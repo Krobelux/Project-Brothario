@@ -26,10 +26,10 @@ TagManager:
   - Blocks
   - 
   - Hazards
+  - Death Field
   - 
-  - 
-  - 
-  - 
+  - Enemy
+  - SpikeEnemy
   - 
   - 
   - 
