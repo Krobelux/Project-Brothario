@@ -7,6 +7,7 @@ public class CoinController : MonoBehaviour
 {
     [SerializeField] public static int plyrCoins = 0;     //Amount of coins the player has
     PlayerController pc;        //reference to PlayerController
+    private GameManager gameManager;
     Animator anim;
 
     private bool plyrCollectCoin = false;
@@ -14,6 +15,7 @@ public class CoinController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -24,8 +26,9 @@ public class CoinController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision) {
 
         if (collision.gameObject.tag == "Player"){
-            plyrCoins++;
-            Debug.Log("Static Coin Collected. Current coins: " + plyrCoins);
+            gameManager.UpdateCoin(1);
+            gameManager.UpdateScore(50);
+            Debug.Log("Static Coin Collected.");
             plyrCollectCoin = true;
             Destroy(gameObject, 0.4f);
         }
