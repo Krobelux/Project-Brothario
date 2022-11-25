@@ -7,7 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI coinText; 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI worldText;
 
