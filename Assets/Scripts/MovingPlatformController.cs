@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class MovingPlatformController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 1.0f;
     public List<Transform> waypoint;
     private int currentTargetIndex;
     public GameObject waypointobj;
+    public GameObject platform;
+    public PlayerController pc;
+    
+
 
     private void Awake()
     {
@@ -20,6 +24,8 @@ public class MovingPlatformController : MonoBehaviour
         {
             transform.position = waypoint[0].position;
         }
+
+        //platform = GameObject.FindGameObjectWithTag("MovingPlatform");
         
     }
 
@@ -62,6 +68,26 @@ public class MovingPlatformController : MonoBehaviour
             DestroyImmediate(waypoint[i].gameObject);
         }
         waypoint.Clear();
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+
+
+        if (pc.TouchingMovingPlatform())    //Object reference not set to an instance of an object(?!)
+        {
+            collision.transform.SetParent(transform);
+        }
+        
+        //collision.transform.SetParent(null);
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision) {
+
+        //pc.GetComponent<Rigidbody2D>().AddForce(transform.forward);
+        collision.transform.SetParent(null);
+        
     }
 
 }

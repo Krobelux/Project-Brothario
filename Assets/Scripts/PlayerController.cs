@@ -30,12 +30,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform grndCheckPos;
     [SerializeField] private LayerMask whatIsGrnd;
     [SerializeField] private LayerMask whatIsHzrd;
+    [SerializeField] private LayerMask whatIsPltfrm;
     [SerializeField] private LayerMask whatIsJumpableEnemy;
     [SerializeField] private LayerMask whatIsDF;
     [SerializeField] private Transform blockCheckPos;
     [SerializeField] private LayerMask whatIsBlock;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
+    private bool isTouchingMovPlatform = false;
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
     private Vector2 direction;
@@ -61,12 +63,15 @@ public class PlayerController : MonoBehaviour
         
         isFacingRight = true;
 
+
+
     }
 
     void Update() 
     {
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
+        isTouchingMovPlatform = TouchingMovingPlatform();
         Animation();
         Flip();
         //Movement(direction.x);
@@ -83,6 +88,14 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Movement(direction.x);
+        // if (direction.x != 0){
+        //     gameObject.transform.SetParent(null);
+            
+        // }
+        // else if (TouchingMovingPlatform())
+        // {
+
+        // }
 
         if(jumpTimer > Time.time && TouchingGround() == true){
             Jump();
@@ -120,7 +133,14 @@ public class PlayerController : MonoBehaviour
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsDF);       
     }
 
+    public bool TouchingMovingPlatform(){      //Overlap Component to check if Player overlaps with a moving platform
+        //Debug.Log("is touching moving platform");
+        return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsPltfrm);       
+    }
+
+
     void Movement(float horiz){ 
+
         if (TouchingGround() == true){
             rigidbody2d.AddForce(Vector2.right * horiz * walkSpeed);    //Vector2.Right = (x:1, y:0) * horiz(-1, 0, or 1 (left, stop, right)) * walking speed
             

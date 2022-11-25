@@ -10,6 +10,7 @@ TagManager:
   - Item
   - staticCoin
   - bounceCoin
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Enemy
   - SpikeEnemy
   - 
-  - 
+  - MovingPlatform
   - 
   - 
   - 
