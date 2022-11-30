@@ -6,6 +6,7 @@ public class BGScrolling : MonoBehaviour
 {
 
     public float scrollSpeed = 0.01f;
+    public float vertScrollSpeed = 0.01f;
 
     private Renderer rend;
 
@@ -19,5 +20,6 @@ public class BGScrolling : MonoBehaviour
     void Update()
     {
         rend.material.mainTextureOffset = new Vector2(Time.time * scrollSpeed, 0);
+        //rend.material.mainTextureOffset = new Vector2(Time.time * scrollSpeed, Time.time * scrollSpeed);
     }
 }

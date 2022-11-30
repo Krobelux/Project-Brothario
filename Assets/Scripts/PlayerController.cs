@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsBlock;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
+    private bool isCrouching = false;
     private bool isTouchingMovPlatform = false;
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
@@ -71,12 +72,12 @@ public class PlayerController : MonoBehaviour
     {
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
+        //isCrouching = Crouching();
+        
         isTouchingMovPlatform = TouchingMovingPlatform();
+        Crouching();
         Animation();
         Flip();
-        //Movement(direction.x);
-        //Jump();
-        
 
         if(Input.GetButton("Jump")){
             jumpTimer = Time.time + jumpDelay;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+
         Movement(direction.x);
         // if (direction.x != 0){
         //     gameObject.transform.SetParent(null);
@@ -132,23 +134,23 @@ public class PlayerController : MonoBehaviour
     private bool TouchingDeathField(){      //Overlap Component to check if Player overlaps with falling off map
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsDF);       
     }
-
     public bool TouchingMovingPlatform(){      //Overlap Component to check if Player overlaps with a moving platform
         //Debug.Log("is touching moving platform");
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsPltfrm);       
     }
 
+    private bool Crouching()
+    {
+        return Input.GetKey(KeyCode.S);
+    }
+
 
     void Movement(float horiz){ 
 
-        if (TouchingGround() == true){
+        if (TouchingGround()){
             rigidbody2d.AddForce(Vector2.right * horiz * walkSpeed);    //Vector2.Right = (x:1, y:0) * horiz(-1, 0, or 1 (left, stop, right)) * walking speed
             
-            //Supposed to reset runspeed back to normal values?!?!
-            if (Input.GetKeyUp(KeyCode.LeftShift))     
-            {
-                runSpeed = walkSpeed;
-            }
+            
 
             if (Input.GetKey(KeyCode.LeftShift) && horiz != 0) 
             {   //Running Code
@@ -163,6 +165,12 @@ public class PlayerController : MonoBehaviour
                 {
                     rigidbody2d.velocity = new Vector2(Mathf.Sign(rigidbody2d.velocity.x) * maxRunSpeed, rigidbody2d.velocity.y);
                 }
+
+                //Supposed to reset runspeed back to normal values?!?!
+                if (Input.GetKeyUp(KeyCode.LeftShift))     
+                {
+                    runSpeed = walkSpeed;
+                }
                 
             }
             
@@ -170,6 +178,8 @@ public class PlayerController : MonoBehaviour
             {   //Controls Player to not move faster than Walk Speed if not running
                 rigidbody2d.velocity = new Vector2(Mathf.Sign(rigidbody2d.velocity.x) * walkSpeed, rigidbody2d.velocity.y);
             }
+
+
 
         }
     }
@@ -260,6 +270,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isTouchingGround", isTouchingGround);
         anim.SetBool("isTouchingHazard", isTouchingHazard);
+        anim.SetBool("isCrouching", Crouching());
 
     }
 
