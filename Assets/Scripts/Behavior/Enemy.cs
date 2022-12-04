@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb2d;
     public Animator anim;
     private Vector3 localScale;
-    bool isFacingRight; 
+    bool isFacingRight;  
  
 
 
