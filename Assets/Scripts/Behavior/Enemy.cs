@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         localScale = transform.localScale;
-    }
+    }   
 
     private void OnCollisionEnter2D(Collision2D col) 
     {
@@ -65,16 +65,10 @@ public class Enemy : MonoBehaviour
 
         if (((isFacingRight == true) && (localScale.x < 0)) || ((isFacingRight == false) && (localScale.x > 0)))
         {
-            localScale.x *= -1;
+            localScale.x *= -1; 
         }
 
         transform.localScale = localScale;
 
     }
-
-
-    
-
-
-
 }
