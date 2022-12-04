@@ -6,14 +6,11 @@ public class Enemy : MonoBehaviour
 {
 
     //Enemy Stats
-    [SerializeField] float enemySpeed = 5;
-    [SerializeField] public Transform[] waypoints;
-    
-    protected Vector3 moveTarget;
-    protected Vector3 velocity;
-    protected Vector3 lastPos;
-    
+    [SerializeField] float moveSpeed = 5;
+    private float directX = -1f;
+    private Rigidbody2D rb2d;
     public Animator anim;
+    private Vector3 localScale;
     bool isFacingRight; 
  
 
@@ -27,63 +24,57 @@ public class Enemy : MonoBehaviour
     public virtual void Init()
     {
         anim = GetComponentInChildren<Animator>();
-        moveTarget = waypoints[1].position;
+        rb2d = GetComponent<Rigidbody2D>();
+        localScale = transform.localScale;
+    }
+
+    private void OnCollisionEnter2D(Collision2D col) 
+    {
+        if (col.gameObject.CompareTag("Obstacles"))
+        {
+            directX *= -1;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        
     }
 
-    public virtual IEnumerator SetTarget(Vector3 position)
+    void FixedUpdate()
     {
-        yield return new WaitForSeconds(5f);
-        moveTarget = position;
-        FaceTowards(position - transform.position);
+        rb2d.velocity = new Vector2(directX * moveSpeed, rb2d.velocity.y);
     }
 
-    public virtual void FaceTowards(Vector3 direction)
+    void LateUpdate() 
     {
-        if (direction.x < 0f)
-        {
-            transform.localEulerAngles = new Vector3(0, 180, 0);
-        }
-        else 
-        {
-            transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
+        FaceTowards();
     }
 
-    public virtual void Movement()
+    public virtual void FaceTowards()
     {
-        velocity = ((transform.position - lastPos) / Time.deltaTime);
-        lastPos = transform.position;
-
-        anim.SetFloat("speed", velocity.magnitude);
-
-        if (transform.position != waypoints[0].position)
+        if (directX < 0f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, moveTarget, enemySpeed * Time.deltaTime);
+            isFacingRight = true;
         }
-        else
+        else if (directX > 0f)
         {
-            if (moveTarget == waypoints[0].position)
-            {
-                if (isFacingRight)
-                {
-                    isFacingRight = !isFacingRight;
-                    StartCoroutine("SetTarget", waypoints[1].position);
-                }
-            }
-            else
-            {
-                if (!isFacingRight)
-                {
-                    isFacingRight = !isFacingRight;
-                    StartCoroutine("SetTarget", waypoints[0].position);
-                }
-            }
+            isFacingRight = false;
         }
+
+        if (((isFacingRight == true) && (localScale.x < 0)) || ((isFacingRight == false) && (localScale.x > 0)))
+        {
+            localScale.x *= -1;
+        }
+
+        transform.localScale = localScale;
+
     }
+
+
+    
+
+
+
 }

@@ -11,11 +11,15 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI worldText;
 
-    //========================= Player References ============================
+    //========================= Player Score References ============================
+    [SerializeField] int plyrLives = 3;
     private int plyrCoins;
-    private int plyrLives;
     private int plyrScore;
-    
+    //========================= PlayerController Reference ============================
+    private PlayerController pc;
+    private Rigidbody2D rb2d;
+    private Collider2D coll2d;
+
 
     //========================= Methods ============================
     public static GameManager Instance
@@ -50,7 +54,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void UpdateWorldText()
@@ -77,10 +81,26 @@ public class GameManager : MonoBehaviour
 
     public void LoseLives(int loseLives)
     {
-        plyrLives += loseLives;
+        plyrLives -= loseLives;
     }
 
+    public void GameOver()
+    {
+        rb2d.velocity = new Vector2(0, 0);
+        coll2d.enabled = false;
+        
 
+        if (plyrLives <= 0)
+        {
+            Debug.Log("GAME OVER.");
+            SceneManager.LoadScene("GameOver");
+        }
+        else if (plyrLives >= 1) 
+        {
+            Debug.Log("Death occurs. Restarting Level...");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  //Make sure level name is consistent with Scene level names
+        }
+    }
 
     // public void GameOver(bool flag){
     //     _isGameOver = flag;
@@ -105,8 +125,7 @@ public class GameManager : MonoBehaviour
     //     }
     // }
 
-    // private IEnumerator WaitForAnim(){
-    //     yield return new WaitForSeconds(deathDelay);
-    // }
+
+
 
 }

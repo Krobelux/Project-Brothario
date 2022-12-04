@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
 {
 
     //========================= Player properties ============================
-    private int plyrHealth = 1;     //The amount of hits a player can take before dying
-    [SerializeField] int plyrLives = 3;     //Amount of player lives before game over
+    public int plyrHealth = 3;     //The amount of hits a player can take before dying
     //========================= Movement ============================
     [SerializeField] private float walkSpeed = 6f;       //The default speed if you just move the character
     
@@ -33,12 +32,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsPltfrm;
     [SerializeField] private LayerMask whatIsJumpableEnemy;
     [SerializeField] private LayerMask whatIsDF;
-    [SerializeField] private Transform blockCheckPos;
+    // [SerializeField] private Transform blockCheckPos;
     [SerializeField] private LayerMask whatIsBlock;
     private bool isTouchingGround = false;
     private bool isTouchingHazard = false;
     private bool isCrouching = false;
-    private bool isTouchingMovPlatform = false;
+    public bool isTouchingMovPlatform = false;
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
     private Vector2 direction;
@@ -72,10 +71,9 @@ public class PlayerController : MonoBehaviour
     {
         isTouchingGround = TouchingGround();
         isTouchingHazard = TouchingHazard();
-        //isCrouching = Crouching();
-        
+        isCrouching = Crouching();
         isTouchingMovPlatform = TouchingMovingPlatform();
-        Crouching();
+
         Animation();
         Flip();
 
@@ -107,15 +105,14 @@ public class PlayerController : MonoBehaviour
         if (TouchingHazard() == true)       //Hazards are things like spike balls, spike walls, etc.
         {   
             Debug.Log("is touching Hazard");
-            Damage();
         }
 
-        if (TouchingDeathField() == true)       //Death Field is the zone underneath the levels that immediately kill the player
-        {
-            Debug.Log("is touching Death Field");
-            plyrLives -= 1;
-            GameOver();
-        }
+        // if (TouchingDeathField() == true)       //Death Field is the zone underneath the levels that immediately kill the player
+        // {
+        //     Debug.Log("is touching Death Field");
+        //     //plyrLives -= 1;
+
+        // }
 
         modifyPhysics();
     }
@@ -150,8 +147,7 @@ public class PlayerController : MonoBehaviour
         if (TouchingGround()){
             rigidbody2d.AddForce(Vector2.right * horiz * walkSpeed);    //Vector2.Right = (x:1, y:0) * horiz(-1, 0, or 1 (left, stop, right)) * walking speed
             
-            
-
+        
             if (Input.GetKey(KeyCode.LeftShift) && horiz != 0) 
             {   //Running Code
                 rigidbody2d.AddForce(Vector2.right * horiz * runSpeed);
@@ -223,36 +219,20 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void GameOver()
-    {
-        StartCoroutine(WaitForAnim());
-        rigidbody2d.velocity = new Vector2(0, 0);
-        collider2d.enabled = false;
-        
 
-        if (plyrLives <= 0)
-        {
-            Debug.Log("GAME OVER.");
-            SceneManager.LoadScene("GameOver");
-        }
-        else {
-            Debug.Log("Death occurs. Restarting Level...");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  //Make sure level name is consistent with Scene level names
-        }
-    }
 
     
-    void Damage(){      //Take Damage. Enemies deal 1 damage. Falling off map deals all damage. Brothario only has 2 health at most.
-        Debug.Log("Took damage");
-        plyrHealth -= 1;
-        if (plyrHealth >= 1){
-                GameOver();
-            }
-            else if (plyrHealth <= 0){
-                Debug.Log("Activated Game Over Method.");
-                GameOver();
-            }
-    }
+    // void Damage(){      //Take Damage. Enemies deal 1 damage. Falling off map deals all damage. Brothario only has 2 health at most.
+    //     Debug.Log("Took damage");
+    //     plyrHealth -= 1;
+    //     if (plyrHealth >= 1){
+    //             GameOver();
+    //         }
+    //         else if (plyrHealth <= 0){
+    //             Debug.Log("Activated Game Over Method.");
+    //             GameOver();
+    //         }
+    // }
 
     private IEnumerator WaitForAnim(){
         yield return new WaitForSeconds(deathDelay);
@@ -270,7 +250,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isTouchingGround", isTouchingGround);
         anim.SetBool("isTouchingHazard", isTouchingHazard);
-        anim.SetBool("isCrouching", Crouching());
+        anim.SetBool("isCrouching", isCrouching);
 
     }
 

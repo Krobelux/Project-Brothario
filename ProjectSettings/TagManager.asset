@@ -11,6 +11,7 @@ TagManager:
   - staticCoin
   - bounceCoin
   - MovingPlatform
+  - Obstacles
   layers:
   - Default
   - TransparentFX
