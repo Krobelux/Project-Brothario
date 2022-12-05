@@ -8,7 +8,7 @@ public class Snail : MonoBehaviour
     [SerializeField] private float headCheckRadius = 0.24f;
     [SerializeField] private LayerMask whatIsPlyr;
 
-    private KillPlayer kp;
+    // private KillPlayer kp;
 
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class Snail : MonoBehaviour
         if (HitPlayer() == true)       //Add what to do when Snail hits player in this code block
         {   
             Debug.Log("Touched Player.");
-            kp.DmgPlayer(1);
+            // kp.DmgPlayer(1);
             //kp.DefPlayer();
         }
     }

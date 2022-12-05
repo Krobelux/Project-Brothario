@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour
     Animator anim;      //Animation reference Variable
     bool isFacingRight;     //Flip Method reference Variable
 
+    public PlayerController()
+    {
+    }
 
 
 

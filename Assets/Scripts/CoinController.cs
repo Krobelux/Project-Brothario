@@ -15,7 +15,7 @@ public class CoinController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()

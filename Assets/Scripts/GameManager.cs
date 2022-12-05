@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI worldText;
 
     //========================= Player Score References ============================
-    [SerializeField] int plyrLives = 3;
+    [SerializeField] static int plyrLives = 3;
     private int plyrCoins;
     private int plyrScore;
     //========================= PlayerController Reference ============================
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
 
     //========================= Methods ============================
-    public static GameManager Instance
+    public GameManager Instance
     {
         get
         {
