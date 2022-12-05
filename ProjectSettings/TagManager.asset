@@ -63,7 +63,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1767473329
-    locked: 0
+    locked: 0 
   - name: FG Objects
     uniqueID: 1297782877
     locked: 0
