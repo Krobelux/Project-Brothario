@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class CoinController : MonoBehaviour
 {
     [SerializeField] public static int plyrCoins = 0;     //Amount of coins the player has
-    PlayerController pc;        //reference to PlayerController
-    private GameManager gameManager;
+    PlayerController pc;        //reference container to PlayerController
+    GameManager gameManager;
     Animator anim;
 
     private bool plyrCollectCoin = false;

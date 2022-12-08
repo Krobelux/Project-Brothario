@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private PlayerController pc;
     private Rigidbody2D rb2d;
     private Collider2D coll2d;
+    private Vector2 vector2;
 
 
     //========================= Methods ============================
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake() {
         _instance = this;
+
+        rb2d = GetComponent<Rigidbody2D>();
+        coll2d = GetComponent<Collider2D>();
+        vector2 = new Vector2(0, 0);
     }
 
 
@@ -86,9 +91,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        rb2d.velocity = new Vector2(0, 0);
-        coll2d.enabled = false;
         
+        // rb2d.velocity = vector2;
+        // coll2d.enabled = false;
+        plyrLives -= 1;
 
         if (plyrLives <= 0)
         {

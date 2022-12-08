@@ -36,15 +36,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D col) {
+        if (col.gameObject.CompareTag("invisibleBarrier"))
+        {
+            directX *= -1;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        rb2d.velocity = new Vector2(directX * moveSpeed, rb2d.velocity.y);
     }
 
     void FixedUpdate()
     {
-        rb2d.velocity = new Vector2(directX * moveSpeed, rb2d.velocity.y);
+        
     }
 
     void LateUpdate() 

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    GameManager gameManager;
+    GameManager gm;
+    public GameObject gameObject;
 
 
 
 
     //Assign properties in Awake()
     //Assign components in Start()
-    void Awake()
+    void Start()
     {
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm = gameObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -22,12 +23,13 @@ public class PlayerDeath : MonoBehaviour
         
     }
 
+
     private void OnTriggerEnter2D(Collider2D other) {
         
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Achieved Game Over!");
-            // gameManager.GameOver();     //NullReferenceException
+            gm.GameOver();     //NullReferenceException
         }
 
     }
