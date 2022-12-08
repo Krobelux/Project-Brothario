@@ -7,9 +7,10 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public TextMeshProUGUI coinText; 
+    public TextMeshProUGUI coinText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI worldText;
+    public TextMeshProUGUI livesText;
 
     //========================= Player Score References ============================
     [SerializeField] static int plyrLives = 3;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D rb2d;
     private Collider2D coll2d;
     private Vector2 vector2;
+
 
 
     //========================= Methods ============================
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         coll2d = GetComponent<Collider2D>();
         vector2 = new Vector2(0, 0);
+
+        
     }
 
 
@@ -53,6 +57,7 @@ public class GameManager : MonoBehaviour
         UpdateCoin(0);
         UpdateScore(0);
         UpdateWorldText();
+        UpdateLives();
 
     }
 
@@ -71,7 +76,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int score)
     {
         plyrScore += score;
-        scoreText.text = "Brothario\n" + plyrScore;
+        scoreText.text = "Brothario\n" + "SCORE: " + plyrScore;
     }
     public void UpdateCoin(int addCoin)
     {
@@ -79,14 +84,20 @@ public class GameManager : MonoBehaviour
         coinText.text = "x" + plyrCoins;
     }
 
+    public void UpdateLives()
+    {
+        livesText.text = "Lives: " + plyrLives;
+    }
     public void AddLives(int addLives)
     {
         plyrLives += addLives;
+        livesText.text = "Lives: " + plyrLives;
     }
 
     public void LoseLives(int loseLives)
     {
         plyrLives -= loseLives;
+        livesText.text = "Lives: " + plyrLives;
     }
 
     public void GameOver()

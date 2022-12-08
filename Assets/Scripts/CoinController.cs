@@ -9,6 +9,7 @@ public class CoinController : MonoBehaviour
     PlayerController pc;        //reference container to PlayerController
     GameManager gameManager;
     Animator anim;
+    public AudioSource coinsfx;
 
     private bool plyrCollectCoin = false;
 
@@ -26,6 +27,7 @@ public class CoinController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision) {
 
         if (collision.gameObject.tag == "Player"){
+            coinsfx.Play();
             gameManager.UpdateCoin(1);
             gameManager.UpdateScore(50);
             Debug.Log("Static Coin Collected.");

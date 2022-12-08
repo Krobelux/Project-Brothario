@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
     private Vector2 direction;
+    public AudioSource jumpsfx;
     
 
     [SerializeField] private float deathDelay = 3.0f;
@@ -187,6 +188,9 @@ public class PlayerController : MonoBehaviour
         
         rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        jumpsfx.Play();
+
         jumpTimer = 0;
 
     }
