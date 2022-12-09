@@ -13,6 +13,7 @@ TagManager:
   - MovingPlatform
   - Obstacles
   - invisibleBarrier
+  - AudioManager
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - 
   - Hazards
   - Death Field
-  - 
+  - ShellEnemy
   - Enemy
   - SpikeEnemy
   - 

@@ -1,11 +1,16 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-[CustomEditor(typeof(MovingPlatformController))]
+
 
 public class MovingPlatformControllerEditor : Editor
 {
+#if UNITY_EDITOR
+[CustomEditor(typeof(MovingPlatformController))]
     public override void OnInspectorGUI()
     {
+        #if UNITY_EDITOR
         //base.OnInspectorGUI();
         MovingPlatformController controller = (MovingPlatformController)target;
         controller.moveSpeed = EditorGUILayout.FloatField("Speed: ", controller.moveSpeed);     //Adds a Float Field in the editor that modifies MovingPlatformController.moveSpeed value
@@ -22,13 +27,12 @@ public class MovingPlatformControllerEditor : Editor
             //   Debug.Log("Way point added");
         }
 
-        EditorGUILayout.LabelField("------------------------Waypoints-------------------------", EditorStyles.boldLabel);
-
-
         if(controller.waypoint != null && controller.waypoint.Count != 0)
         {
+            #if UNITY_EDITOR
             for (int i = 0; i < controller.waypoint.Count; i++)
             {
+                #if UNITY_EDITOR
                 EditorGUILayout.BeginHorizontal();
                 controller.waypoint[i].gameObject.name = EditorGUILayout.TextField(controller.waypoint[i].gameObject.name);     //Adds a Text Field in the editor that changes the waypoint Object name
                 controller.waypoint[i].position = EditorGUILayout.Vector2Field("" + i, controller.waypoint[i].position);
@@ -42,10 +46,13 @@ public class MovingPlatformControllerEditor : Editor
                 }
 
                 EditorGUILayout.EndHorizontal();
+                #endif
             }
+            #endif
         }
+        #endif
 
-        
 
     }
+#endif
 }

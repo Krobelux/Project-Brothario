@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float linearDrag = 4f;
     public float gravity = 1f;
     public float fallMultiplier = 5f;
+    public bool canMove = true;
 
     //========================= Layer/GroundCheck properties ============================
     [SerializeField] private float grndCheckRadius = 0.24f;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool isCrouching = false;
     public bool isTouchingMovPlatform = false;
     private Rigidbody2D rigidbody2d;
+    private RigidbodyConstraints2D rb2dConstr;
     private Collider2D collider2d;
     private Vector2 direction;
     public AudioSource jumpsfx;
@@ -48,10 +50,6 @@ public class PlayerController : MonoBehaviour
 
     Animator anim;      //Animation reference Variable
     bool isFacingRight;     //Flip Method reference Variable
-
-    public PlayerController()
-    {
-    }
 
 
 
@@ -94,7 +92,7 @@ public class PlayerController : MonoBehaviour
         Movement(direction.x);
         // if (direction.x != 0){
         //     gameObject.transform.SetParent(null);
-            
+        
         // }
         // else if (TouchingMovingPlatform())
         // {
@@ -119,6 +117,8 @@ public class PlayerController : MonoBehaviour
         // }
 
         modifyPhysics();
+
+        
     }
 
 
@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("is touching moving platform");
         return Physics2D.OverlapCircle(grndCheckPos.position, grndCheckRadius, whatIsPltfrm);       
     }
-
     private bool Crouching()
     {
         return Input.GetKey(KeyCode.S);
@@ -225,6 +224,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void FreezePlayer(bool freeze)
+    {
+        if (freeze == true)
+        {
+            rigidbody2d.constraints = RigidbodyConstraints2D.FreezeAll;           
+        }
+        else
+        {
+            rigidbody2d.constraints = RigidbodyConstraints2D.None | RigidbodyConstraints2D.FreezeRotation;
+        }
+        
+    }
+
 
 
 
@@ -275,6 +287,9 @@ public class PlayerController : MonoBehaviour
     }
 
 }
+
+
+
 
 //old jump code
             // //Player jump code block

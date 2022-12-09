@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDeath : MonoBehaviour
 {
     GameManager gm;
-    public GameObject gameObject;
+    public new GameObject gameObject;
 
 
 
@@ -29,7 +29,7 @@ public class PlayerDeath : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Achieved Game Over!");
-            gm.GameOver();     //NullReferenceException
+            gm.GameOver();
         }
 
     }

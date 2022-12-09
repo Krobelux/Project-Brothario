@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LevelBGM();
+        LevelBGM(true);
     }
 
     // Update is called once per frame
@@ -27,35 +27,61 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    void LevelBGM()
+    public void LevelBGM(bool enabled)
     {
         int activeScene = SceneManager.GetActiveScene().buildIndex;
 
-        // if (sceneIndexNumber == 0)
-        // {
-        //     //Play Main Menu music
-        // }
-        switch(activeScene)
+        if (enabled == true)
         {
-            case 0:     //Play Main Menu music
-            mainMenubgm.Play();
-                break;
+                switch(activeScene)
+            {
+                case 0:     //Play Main Menu music
+                mainMenubgm.Play();
+                    break;
 
-            case 1:     //Play Level 1 music
-            level1bgm.Play();
-                break;
+                case 1:     //Play Level 1 music
+                level1bgm.Play();
+                    break;
 
-            case 2:     //Play Level 2 music
-            level2bgm.Play();
-                break;
+                case 2:     //Play Level 2 music
+                level2bgm.Play();
+                    break;
 
-            case 3:     //Play Game Over music
-            gameOverbgm.Play();
-                break;
+                case 3:     //Play Game Over music
+                gameOverbgm.Play();
+                    break;
 
-            default:    //Play Default music
-            mainMenubgm.Play();
-                break;
+                default:    //Play Default music
+                mainMenubgm.Play();
+                    break;
+            }
         }
+        else
+        {
+                switch(activeScene)
+            {
+                case 0:     //Play Main Menu music
+                mainMenubgm.Stop();
+                    break;
+
+                case 1:     //Play Level 1 music
+                level1bgm.Stop();
+                    break;
+
+                case 2:     //Play Level 2 music
+                level2bgm.Stop();
+                    break;
+
+                case 3:     //Play Game Over music
+                gameOverbgm.Stop();
+                    break;
+
+                default:    //Play Default music
+                mainMenubgm.Stop();
+                    break;
+            }
+        }
+
+        
     }
 }

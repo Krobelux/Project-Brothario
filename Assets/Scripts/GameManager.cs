@@ -6,6 +6,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    //========================= TextMeshPro References ============================
     private static GameManager _instance;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI scoreText;
@@ -14,15 +15,15 @@ public class GameManager : MonoBehaviour
 
     //========================= Player Score References ============================
     [SerializeField] static int plyrLives = 3;
-    private int plyrCoins;
-    private int plyrScore;
-    //========================= PlayerController Reference ============================
+    private static int plyrCoins = 0;
+    private static int plyrScore = 0000;
+    //========================= PlayerController References ============================
     private PlayerController pc;
     private Rigidbody2D rb2d;
     private Collider2D coll2d;
-    private Vector2 vector2;
 
-
+    //========================= Audio Reference ============================
+    public AudioSource addLifeSfx;
 
     //========================= Methods ============================
     public GameManager Instance
@@ -41,11 +42,6 @@ public class GameManager : MonoBehaviour
     private void Awake() {
         _instance = this;
 
-        rb2d = GetComponent<Rigidbody2D>();
-        coll2d = GetComponent<Collider2D>();
-        vector2 = new Vector2(0, 0);
-
-        
     }
 
 
@@ -53,18 +49,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        plyrCoins = 00;
-        UpdateCoin(0);
-        UpdateScore(0);
+        UpdateCoin();
+        UpdateScore();
         UpdateWorldText();
         UpdateLives();
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+        Coins2Lives();
     }
 
     public void UpdateWorldText()
@@ -73,12 +68,21 @@ public class GameManager : MonoBehaviour
         worldText.text = "Level\n" + s;
     }
 
-    public void UpdateScore(int score)
+    public void UpdateScore()
+    {
+        scoreText.text = "Brothario\n" + "SCORE: " + plyrScore;
+    }
+    public void UpdateScore(int score)      //Overload 1
     {
         plyrScore += score;
         scoreText.text = "Brothario\n" + "SCORE: " + plyrScore;
     }
-    public void UpdateCoin(int addCoin)
+
+    public void UpdateCoin()
+    {
+        coinText.text = "x" + plyrCoins;
+    }
+    public void UpdateCoin(int addCoin)     //Overload 1
     {
         plyrCoins += addCoin;
         coinText.text = "x" + plyrCoins;
@@ -100,11 +104,19 @@ public class GameManager : MonoBehaviour
         livesText.text = "Lives: " + plyrLives;
     }
 
+    public void Coins2Lives()
+    {
+        if (plyrCoins >= 50)
+        {
+            addLifeSfx.Play();
+            UpdateCoin(-50);
+            AddLives(1);
+        }
+    }
+
     public void GameOver()
     {
-        
-        // rb2d.velocity = vector2;
-        // coll2d.enabled = false;
+
         plyrLives -= 1;
 
         if (plyrLives <= 0)

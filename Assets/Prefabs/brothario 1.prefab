@@ -169,11 +169,12 @@ MonoBehaviour:
   linearDrag: 3
   gravity: 1
   fallMultiplier: 5
+  canMove: 1
   grndCheckRadius: 0.15
   grndCheckPos: {fileID: 2387177155339590179}
   whatIsGrnd:
     serializedVersion: 2
-    m_Bits: 1053440
+    m_Bits: 1118976
   whatIsHzrd:
     serializedVersion: 2
     m_Bits: 16384

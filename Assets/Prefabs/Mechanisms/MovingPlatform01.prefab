@@ -124,9 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6abbce47276b748a9645c229dbb4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 2
   waypoint: []
-  waypointobj: {fileID: 7194461752042993580, guid: f2ace908c2701cc45b3d69cc983b2410, type: 3}
+  waypointobj: {fileID: 8261706130195095028}
+  platform: {fileID: 8261706128308165664}
 --- !u!1 &8261706129751964065
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +218,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ace908c2701cc45b3d69cc983b2410, type: 3}
+--- !u!1 &8261706130195095028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7194461752042993580, guid: f2ace908c2701cc45b3d69cc983b2410, type: 3}
+  m_PrefabInstance: {fileID: 1256685902291937880}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8261706130195095029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7194461752042993581, guid: f2ace908c2701cc45b3d69cc983b2410, type: 3}
