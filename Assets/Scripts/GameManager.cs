@@ -13,10 +13,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI worldText;
     public TextMeshProUGUI livesText;
 
-    //========================= Player Score References ============================
+    //========================= Player Progress References ============================
     [SerializeField] static int plyrLives = 3;
     private static int plyrCoins = 0;
     private static int plyrScore = 0000;
+    private static int currLevel;
+    private static bool plyrDead = false;
     //========================= PlayerController References ============================
     private PlayerController pc;
     private Rigidbody2D rb2d;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        plyrDead = false;
         UpdateCoin();
         UpdateScore();
         UpdateWorldText();
@@ -116,19 +119,33 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-
+        GetCurrentLevel();
+        plyrDead = true;
         plyrLives -= 1;
+        
+        
 
         if (plyrLives <= 0)
         {
-            Debug.Log("GAME OVER.");
+            Debug.Log("GAME OVER. Current Level: " + currLevel);
+            plyrLives += 3;
             SceneManager.LoadScene("GameOver");
         }
         else if (plyrLives >= 1) 
         {
-            Debug.Log("Death occurs. Restarting Level...");
+            Debug.Log("Death occurs. Restarting Level... Current Level: " + currLevel);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  //Make sure level name is consistent with Scene level names
         }
+    }
+
+    public static int GetCurrentLevel()
+    {
+        if (!plyrDead)
+        {
+            currLevel = SceneManager.GetActiveScene().buildIndex;
+        }
+        
+        return currLevel;
     }
 
     // public void GameOver(bool flag){
